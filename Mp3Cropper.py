@@ -43,7 +43,7 @@ def SetupEnv():
     return
 
 def MkTempFile(ext):
-    if tempFile.has_key(ext):
+    if ext in tempFile:
         return tempFile[ext]
     else:
         temp = mkstemp(ext)[1]
