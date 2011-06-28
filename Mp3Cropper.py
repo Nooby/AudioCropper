@@ -27,7 +27,7 @@ def main():
     except SoxException as e:
         vPrint("Sox encountered an Error: " + e)
     except SoxNotFoundException as e:
-        vPrint("Sox not found. Pleas add Sox to your system Path or specify the location of Sox with -p.")
+        vPrint("Sox not found. Please add Sox to your system Path or specify the location of Sox with -p.")
     finally:
         CleanUp()
         return
@@ -171,7 +171,7 @@ def audioTrim(f, temp, s, l):
 
 def ExecCommand(cmd):
     try:
-         return subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE).stdout.read()
+         return subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.read()
     except OSError as e:
        raise SoxNotFoundException(e)
 
