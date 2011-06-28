@@ -22,7 +22,7 @@ class AcBaseException(Exception):
 
 class AcSoxNotFoundException(AcBaseException):
     def __init__(self):
-        AcBaseException.__init__(self, "Sox not found. Pleas add Sox to your system Path.")
+        AcBaseException.__init__(self, "Sox not found. Please add Sox to your system Path.")
 
 class AcSoxException(AcBaseException):
     pass
@@ -30,5 +30,3 @@ class AcSoxException(AcBaseException):
 class AcOptionException(AcBaseException):
     pass
 
-class AcNotFoundException(AcBaseException):
-    pass

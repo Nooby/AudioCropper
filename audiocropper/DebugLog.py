@@ -23,13 +23,18 @@ class Debug():
     _exceptionHandled = False
     _trace = ""
 
-    def __init__(self, message):
+    def __init__(self, message, extMsg = ""):
         self.message = message
+        if extMsg == "":
+            self.extMsg = message
+        else:
+            self.extMsg = extMsg
         self.myDepth = Debug._depth
         Debug._depth = self.myDepth + 1
 
     def __enter__(self):
         self.printDebug("Enter %s\n" % self.message)
+        return self
 
     def printDebug(self, msg):
         Debug._text += " "*4*self.myDepth + msg
@@ -44,7 +49,7 @@ class Debug():
             Debug._trace = format_exception(t, value, traceback)
             Debug._exceptionHandled = True
         Debug._depth = Debug._depth - 1
-        self.printDebug("Exit %s\n" % self.message)
+        self.printDebug("Exit %s\n" % self.extMsg)
 
     @classmethod
     def getDebugData(cls):

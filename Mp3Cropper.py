@@ -63,7 +63,7 @@ def CleanUp():
     rmdir(tempFolder)
     return
 
-def SetupOptParser():
+def SetupOptParser(): 
     usage = '''Usage: %prog [options] files
 
     Every Option is Optional, but either the Start or the End Option has to be

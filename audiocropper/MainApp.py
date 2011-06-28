@@ -15,13 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from DebugLog import Debug
-from Utils import setupTemp
-from Exceptions import AcBaseException, AcOptionException
-from glob import glob
+from Utils import setupTemp, mkTempFile, cleanTemp
+from Exceptions import AcOptionException
 from shutil import move
-from os import remove, rmdir
+from glob import glob
 from os.path import abspath, isdir, isfile, exists, join, splitext, basename
-
+from sox import SetupSox, getLength, audioTrim
 
 class Application:
 
@@ -33,12 +32,14 @@ class Application:
             self.__checkOpt()
             setupTemp()
 
-            self.SoxTrim = self.Options.sox + ''' "{0}" "{1}" trim {2} {3}'''
-            self.SoxLength = self.Options.sox + ''' --info "{0}" -D'''
+            SetupSox(self.Options.sox)
+
+    def __enter__(self):
+        return self
 
     def __checkOpt(self):
         with Debug("CheckOpt"):
-            if self.Options.dir is None and len(self.Options.args) == 0:
+            if self.Options.dir is None and len(self.Args) == 0:
                 raise AcOptionException("No File or Directory given.")
             if self.Options.start == 0 and self.Options.end == 0: 
                 raise AcOptionException("No Start or End Option given.")
@@ -46,14 +47,7 @@ class Application:
     def run(self):
         with Debug("AppRun"):        
             files = self.__gatherFiles()
-            #NormalizeFiles()
-            #try:
-            #    ProcessFiles() 
-            #except AcBaseException as e:
-            #    self.printError(e)
-            #finally:
-            #    CleanTemp()
-            #    return
+            self.__processFiles(files)
 
     def __gatherFiles(self):
         with Debug("gatherFiles"):
@@ -74,8 +68,34 @@ class Application:
             Debug.report("%s found." % len(Files))
             return Files
 
-    
-    def printError(self, msg):
-        pass
+    def __processFiles(self, files):
+        with Debug("ProcessFiles"):
+            for f in files:
+                self.__processFile(f)
+
+    def __processFile(self, f):
+        with Debug("ProcessFile: " + basename(f), "ProcessFile"):
+            length = getLength(f)
+            newLength = length - self.Options.start - self.Options.end
+            if newLength <= 0:
+                self.__show("File %s is to small to Trim." % f)
+                return
+            temp = mkTempFile(splitext(f)[1])
+            audioTrim(f, temp, self.Options.start, newLength)
+            if self.Options.backup:
+                move(f, f + ".bak")
+            move(temp, f)
+            self.__show("File %s trimmed to %f seconds." % (basename(f), newLength))
+            return
+
+    def __show(self, msg):
+        if self.Options.verbose:
+            print(msg)
+        return
+
+    def __exit__(self, t, value, stacktrace):
+        if self.Options.debug:
+            print(Debug.getDebugData())
+        cleanTemp()
 
 

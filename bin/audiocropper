@@ -35,13 +35,6 @@ if python_path:
     os.putenv('PYTHONPATH', "%s:%s" % (os.getenv('PYTHONPATH', ''), ':'.join(python_path))) # for subprocesses
 
 import audiocropper
-from audiocropper.DebugLog import Debug
-
-try:
-    audiocropper.main()
-except:
-    pass
-finally:
-    print(Debug.getDebugData())
+audiocropper.main()
 
 

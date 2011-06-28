@@ -26,12 +26,14 @@ tempFile = {}
 
 def mkTempFile(ext):
     with Debug("mkTempFile"):
+        temp = ""
         if ext in tempFile:
-            return tempFile[ext]
+            temp = tempFile[ext]
         else:
             temp = mkstemp(ext)[1]
             tempFile[ext] = temp
-            return temp
+        Debug.report(temp)
+        return temp
 
 def setupTemp():
     with Debug("SetupTemp"):
