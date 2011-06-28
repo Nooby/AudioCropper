@@ -16,13 +16,13 @@ Linux Installation
 
 - Run the following command to Install Sox:
 
-    sudo apt-get install sox libsox-fmt-mp3
+        sudo apt-get install sox libsox-fmt-mp3
 
 - Download AudioCropper and run the following commands:
     
-    tar -xf audiocropper-<version>.tar.gz
-    cd audiocropper-<version>
-    sudo python setup.py install
+        tar -xf audiocropper-<version>.tar.gz
+        cd audiocropper-<version>
+        sudo python setup.py install
 
 Windows Install
 ---------------
