@@ -1,47 +1,25 @@
-Usage: audiocropper [options] files
+AudioCropper
+------------
 
-        Every Option is Optional, but either the Start or the End Option has to be
-        given.
-       
-        There can be 1 or more file specified. The Files can be relative or absolute
-        paths. If one or more Directory is given (With --dir or -d) then files is 
-        Optional.
+TODO: Long Description of AudioCropper
 
-            Example: 'audiocropper -s 10 file1.mp3 file2.mp3'
-            This will crop the first 10 seconds of "file1.mp3" and "file2.mp3".
+Linux Installation
+------------------
 
-        With the -d or --dir option a Folder can be specified. The Folder can be a
-        relative or absolute path. This path will be extended with a Unix style
-        path pattern (-x or --path-extension).
-        
-            Example: 'audiocropper -s 10 -d "~/Test" -d "~/Test2"'
-            This will crop the first 10 seconds of every MP3 in the "Test"
-            Directory in the current Users Home Directory. (on Linux)
-        
+AudioCropper requires Sox with MP3 support. Sox can be installed with the folowing command:
 
-Options:
-  --version             show program's version number and exit
-  -h, --help            show this help message and exit
-  -b, --backup          The original file will be stored with ".bak" appended
-                        to the filename. This is the Default behavior.
-  -B, --no-backup       A Backup will NOT be created. USE WITH CAUTION.
-  -d FOLDER, --dir=FOLDER
-                        Folder with files for processing. EVERY file witch
-                        matches the Path Extension (Default: MP3) in the
-                        directory will be processed.
-  --debug               Outputs debug Information.
-  -e SECONDS, --end=SECONDS
-                        time in seconds cropped from the End of the File
-  -p SOX, --path-to-sox=SOX
-                        If sox is not in the System Path, it has to be
-                        specified here.
-  -q, --quiet           shows NO status Messages
-  -s SECONDS, --start=SECONDS
-                        time in seconds cropped from the Start of the File
-  -v, --verbose         Shows status Messages in the Console. This is the
-                        default behavior.
-  -x EXT, --path-extension=EXT
-                        Unix style pathname pattern witch will be used to find
-                        files for processing if a Path is specified with
-                        --dir. USE WITH CAUTION.
+    sudo apt-get install sox libsox-fmt-mp3
+
+If you want to other formats than MP3 the corresponding Sox package has to be
+installed. If you want to install all Format Packages for Sox you can use the
+following command:
+
+    sudo apt-get install libsox-fmt-all
+
+When the Sox installation is completed download and unzip AudioCropper.
+Change into the direcktory in witch you just unziped AudioCropper and install
+it with the following command:
+
+    sudo ./setup.py install
+
 
