@@ -45,7 +45,7 @@ class Application:
 
     def run(self):
         with Debug("AppRun"):        
-            self.__gatherFiles()
+            files = self.__gatherFiles()
             #NormalizeFiles()
             #try:
             #    ProcessFiles() 
@@ -56,7 +56,7 @@ class Application:
             #    return
 
     def __gatherFiles(self):
-        with Debug("gatherFiles") as dbg:
+        with Debug("gatherFiles"):
             Files = []
             if self.Options.dir is not None:
                 for d in self.Options.dir:
@@ -71,7 +71,7 @@ class Application:
                 for f in self.Args:
                     if exists(f) and isfile(f):
                         Files.append(abspath(f))
-            Debug.report("%s files found." % len(Files))
+            Debug.report("%s found." % len(Files))
             return Files
 
     

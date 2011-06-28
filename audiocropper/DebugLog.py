@@ -36,7 +36,7 @@ class Debug():
 
     @classmethod
     def report(cls, msg):
-        cls._text += " "*4*(cls._depth+1) + msg
+        cls._text += " "*4*(cls._depth+1) + msg + "\n"
 
     def __exit__(self, t, value, traceback):
         if t is not None and not Debug._exceptionHandled:
@@ -47,8 +47,8 @@ class Debug():
         self.printDebug("Exit %s\n" % self.message)
 
     @classmethod
-    def getDebugData():
-        retVal = Debug._text
-        if not  Debug._trace == "":
-            retVal += "\n\n" + join(Debug._trace, "\n")
+    def getDebugData(cls):
+        retVal = cls._text
+        if not  cls._trace == "":
+            retVal += "\n\n" + join(cls._trace, "\n")
         return retVal
